@@ -26,7 +26,7 @@ def auth_login(args: Namespace) -> None:
     password = getpass.getpass("{}'s Password: ".format(username))
 
     data = {"username": username, "password": password}
-    res = make_request(args.api, route, "POST", data=data, auth=True)
+    res = make_request(args.api, route, "POST", data=data)
 
     owlrc = Path("~/.owlrc").expanduser()
     with owlrc.open(mode="w+") as fd:
