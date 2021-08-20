@@ -9,7 +9,6 @@ from functools import wraps
 from pathlib import Path
 from typing import IO, Any, Callable, Dict, Union
 
-import jwt
 import pkg_resources
 import requests
 import voluptuous as vo
