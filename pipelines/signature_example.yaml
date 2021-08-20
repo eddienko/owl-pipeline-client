@@ -1,0 +1,17 @@
+# Version of the configuration file
+version: 1
+
+# Name of the pipeline
+sig:extra_pip_packages: git+https://github.com/eddienko/owl-example-pipeline.git
+sig:active: True
+
+name: example
+
+# Pipeline arguments
+datalen: 100
+
+# Resources requested
+resources:
+  threads: 2
+  workers: 1
+  memory: 1
