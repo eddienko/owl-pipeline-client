@@ -148,6 +148,16 @@ def job_status(args: Namespace) -> None:
         print(msg.format(**res))
 
 
+def job_log(args: Namespace) -> None:
+    """Get pipeline log
+    """
+    route = "/api/pipeline/log"
+
+    res = make_request(args.api, f"{route}/{args.jobid}", "GET", auth=True)
+
+    print(res.get("log", "Not found"))
+
+
 def job_cancel(args: Namespace) -> None:
     """Add pipeline to queue.
 

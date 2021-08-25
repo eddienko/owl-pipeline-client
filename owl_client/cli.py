@@ -82,6 +82,10 @@ def parse_args(input: List[str]) -> Namespace:
     job_status.add_argument("--json", action="store_true", default=False)
     job_status.set_defaults(func=scripts.job_status)
 
+    job_log = subparsers_job.add_parser("log")
+    job_log.add_argument("jobid", type=int)
+    job_log.set_defaults(func=scripts.job_log)
+
     job_cancel = subparsers_job.add_parser("cancel")
     job_cancel.add_argument("jobid", type=int)
     job_cancel.set_defaults(func=scripts.job_cancel)
