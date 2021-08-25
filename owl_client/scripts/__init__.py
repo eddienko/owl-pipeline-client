@@ -148,7 +148,7 @@ def job_status(args: Namespace) -> None:
         print(msg.format(**res))
 
 
-def job_log(args: Namespace) -> None:
+def job_logs(args: Namespace) -> None:
     """Get pipeline log
     """
     route = "/api/pipeline/log"
