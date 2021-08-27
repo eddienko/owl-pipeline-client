@@ -12,6 +12,6 @@ datalen: 100
 
 # Resources requested
 resources:
-  threads: 2
+  cores: 2
   workers: 1
   memory: 1
