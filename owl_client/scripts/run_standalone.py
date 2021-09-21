@@ -75,7 +75,7 @@ def run_standalone(args: Namespace) -> None:  # pragma: nocover
 
     resources = conf["resources"]
     n_workers = resources.get("workers", 2)
-    threads = resources.get("threads", 2)
+    threads = resources.get("cores", 2)
     memory = resources.get("memory", 7)
 
     tmpdir = os.environ.get("TMP_DIR", "/tmp")

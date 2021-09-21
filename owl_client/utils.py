@@ -13,7 +13,8 @@ import pkg_resources
 import requests
 import voluptuous as vo
 import yaml
-from distributed import Client
+from distributed import Client, WorkerPlugin
+from loky import ProcessPoolExecutor
 
 log = logging.getLogger("owl.cli")
 
@@ -132,6 +133,22 @@ def make_request(api, route, method, data=None, auth=False):
     return res
 
 
+class LoggingPlugin(WorkerPlugin):
+    def __init__(self, config):
+        self.config = config
+
+    def setup(self, worker):
+        import logging.config
+
+        logging.config.dictConfig(self.config)
+
+
+class ProcessPoolPlugin(WorkerPlugin):
+    def setup(self, worker):
+        executor = ProcessPoolExecutor(max_workers=worker.nthreads)
+        worker.executors["processes"] = executor
+
+
 class register_pipeline:
     """Register a pipeline."""
 
@@ -144,11 +161,7 @@ class register_pipeline:
         @wraps(func)
         def wrapper(config: Dict, logconfig: Dict, cluster=None):
 
-            if self.schema is not None:
-                _config = self.schema(config)
-            else:
-                _config = config
-
+            _config = self.schema(config) if self.schema is not None else config
             if cluster is not None:
                 try:
                     client = Client(cluster.scheduler_address)
@@ -157,6 +170,8 @@ class register_pipeline:
                     raise Exception(
                         "Error occurred. Original traceback " "is\n%s\n" % traceback_str
                     )
+                client.register_worker_plugin(LoggingPlugin(logconfig))
+                client.register_worker_plugin(ProcessPoolPlugin)
             else:
                 client = None
             try:

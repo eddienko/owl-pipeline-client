@@ -203,10 +203,11 @@ def parse_args(input: List[str]) -> Namespace:
     # pdef_get.set_defaults(func=get_pipedef)
 
     # # Execute locally: owl execute [-debug] pipeline.yaml
-    # execute = subparsers.add_parser("execute")
-    # execute.add_argument("conf", type=FileType("r"))
-    # execute.add_argument("--debug", action="store_true")
-    # execute.set_defaults(func=run_standalone)
+    execute = subparsers.add_parser("execute")
+    execute.add_argument("conf", type=FileType("r"))
+    execute.add_argument("--debug", action="store_true")
+    execute.add_argument("--api", default="local", help=argparse.SUPPRESS)
+    execute.set_defaults(func=scripts.run_standalone)
 
     args = main_parser.parse_args(input)
     if not hasattr(args, "func"):
