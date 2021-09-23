@@ -4,8 +4,9 @@ import os
 from argparse import Namespace
 from pathlib import Path
 
+import requests
 import yaml
-from owl_client.utils import make_request, read_config
+from owl_client.utils import get_auth, make_request, read_config
 
 from ..utils import print_table
 from .run_standalone import run_standalone  # noqa: F401
@@ -152,10 +153,19 @@ def job_logs(args: Namespace) -> None:
     """Get pipeline log
     """
     route = "/api/pipeline/log"
-
-    res = make_request(args.api, f"{route}/{args.jobid}", "GET", auth=True)
-
-    print(res.get("log", "Not found"))
+    headers = get_auth()
+    r = requests.get(f"{args.api}{route}/{args.jobid}", headers=headers, stream=True)
+    for line in r.iter_lines():
+        if line:
+            jline = json.loads(line.decode())
+            if "detail" in jline:
+                print("ERROR:", jline["detail"])
+            else:
+                print(
+                    "\033[92m{timestamp}\033[0m \033[94mPIPELINE({jobid})\033[0m \033[96m{level}\033[0m {func_name} - {message}".format(
+                        **jline
+                    )
+                )
 
 
 def job_cancel(args: Namespace) -> None:
