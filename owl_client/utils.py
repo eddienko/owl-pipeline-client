@@ -145,8 +145,9 @@ class LoggingPlugin(WorkerPlugin):
 
 class ProcessPoolPlugin(WorkerPlugin):
     def setup(self, worker):
-        executor = ProcessPoolExecutor(max_workers=worker.nthreads)
-        worker.executors["processes"] = executor
+        if hasattr(worker, "executors"):
+            executor = ProcessPoolExecutor(max_workers=worker.nthreads)
+            worker.executors["processes"] = executor
 
 
 class register_pipeline:
