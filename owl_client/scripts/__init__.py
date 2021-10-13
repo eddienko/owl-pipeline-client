@@ -8,6 +8,7 @@ import requests
 import yaml
 from owl_client.utils import get_auth, make_request, read_config
 
+from ..schema import schema_pipeline
 from ..utils import print_table
 from .run_standalone import run_standalone  # noqa: F401
 
@@ -122,7 +123,7 @@ def job_submit(args: Namespace) -> None:
         Argparse namespace containing command line flags.
     """
     route = "/api/pipeline/add"
-    conf = read_config(args.conf)
+    conf = read_config(args.conf, schema_pipeline)
 
     data = {"config": conf}
     res = make_request(args.api, route, "POST", data=data, auth=True)
