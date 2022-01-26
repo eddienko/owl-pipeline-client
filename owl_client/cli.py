@@ -84,6 +84,7 @@ def parse_args(input: List[str]) -> Namespace:
 
     job_logs = subparsers_job.add_parser("logs")
     job_logs.add_argument("jobid", type=int)
+    job_logs.add_argument("--debug", action="store_true", default=False)
     job_logs.set_defaults(func=scripts.job_logs)
 
     job_cancel = subparsers_job.add_parser("cancel")

@@ -155,7 +155,10 @@ def job_logs(args: Namespace) -> None:
     """
     route = "/api/pipeline/log"
     headers = get_auth()
-    r = requests.get(f"{args.api}{route}/{args.jobid}", headers=headers, stream=True)
+    level = "debug" if args.debug else "info"
+    r = requests.get(
+        f"{args.api}{route}/{args.jobid}/{level}", headers=headers, stream=True
+    )
     for line in r.iter_lines():
         if line:
             jline = json.loads(line.decode())
