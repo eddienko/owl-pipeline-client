@@ -172,7 +172,7 @@ class register_pipeline:
                         "Error occurred. Original traceback " "is\n%s\n" % traceback_str
                     )
                 client.register_worker_plugin(LoggingPlugin(logconfig))
-                client.register_worker_plugin(ProcessPoolPlugin)
+                client.register_worker_plugin(ProcessPoolPlugin())
             else:
                 client = None
             try:
