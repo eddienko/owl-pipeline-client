@@ -152,8 +152,7 @@ def job_status(args: Namespace) -> None:
 
 
 def job_logs(args: Namespace) -> None:
-    """Get pipeline log
-    """
+    """Get pipeline log"""
     route = "/api/pipeline/log"
     headers = get_auth()
     level = "debug" if args.debug else "info"
