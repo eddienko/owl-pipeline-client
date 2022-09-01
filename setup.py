@@ -42,7 +42,7 @@ setup(
     tests_require=test_requirements,
     url='https://github.com/eddienko/owl-pipeline-client',
     project_urls=project_urls,
-    version='0.9.6',
+    version='0.10.0',
     zip_safe=False,
     python_requires='>=3.7',
 )
