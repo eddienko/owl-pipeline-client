@@ -210,6 +210,10 @@ def parse_args(input: List[str]) -> Namespace:
     execute.add_argument("--api", default="local", help=argparse.SUPPRESS)
     execute.set_defaults(func=scripts.run_standalone)
 
+    localpipes = subparsers.add_parser("localpipes")
+    localpipes.add_argument("--api", default="local", help=argparse.SUPPRESS)
+    localpipes.set_defaults(func=scripts.local_pipelines)
+
     args = main_parser.parse_args(input)
     if not hasattr(args, "func"):
         if ("admin" in input) and ("pdef" in input):

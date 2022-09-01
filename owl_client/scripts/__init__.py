@@ -4,6 +4,7 @@ import os
 from argparse import Namespace
 from pathlib import Path
 
+import pkg_resources
 import requests
 import yaml
 from owl_client.utils import get_auth, make_request, read_config
@@ -324,3 +325,10 @@ def admin_command(args: Namespace) -> None:
 
     res = make_request(args.api, route, "POST", data=data, auth=True)
     print(res)
+
+
+# List local pipelines -------------------------------------------------------
+def local_pipelines(args: Namespace) -> None:
+    """List local pipelines"""
+    for pipe in pkg_resources.iter_entry_points("owl.pipelines"):
+        print(pipe.dist)
